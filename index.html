@@ -1,0 +1,52 @@
+<html>
+<title>Tableau Live Data Demo</title>
+
+<head>
+<script src="https://your.server.address/javascripts/api/tableau-2.min.js"></script>
+</head>
+<body>
+<script>
+viz = null;
+timeToRefresh = 30; //refresh evry 30 seconds..
+
+	function initViz() {
+		var containerDiv = document.getElementById("vizContainer"),
+		url = "https://your.server.address/#/views/TableauDemoLivedata/Home";  //URL of the Tableau dashboard
+		
+	    var options = {
+				height: "90%",
+				width:  "95%",
+                hideTabs: true,
+				hideToolbar: true,
+                onFirstInteractive: function () {
+                    console.log("Finished loading.");
+                    setInterval(refreshViz, 1000); //run the function [refreshViz] every second
+                    }
+                };
+			
+        viz = new tableau.Viz(containerDiv, url, options); // the dashboard will be displayed here
+		
+		}// function ends
+	
+	function refreshViz(){
+		timeToRefresh--; //reduce counter
+		
+		document.getElementById("timeToRefresh").innerHTML = "refreshing in <b>" + timeToRefresh + "</b> seconds..";
+		
+		if (timeToRefresh == 0) { //counter becomes zero, it's time to refresh
+			console.log("Refreshing..");
+			viz.refreshDataAsync(); //ask Tableau to refresh data in async mode
+			timeToRefresh = 30; //set refesh counter back to 30 seconds
+			} //if ends
+            
+	    } //function ends
+</script>
+<center>
+<div id="vizContainer"></div>
+<div id="timeToRefresh" style="font-family:Imago">Loading dashboard..</div>
+</center>
+<script>
+	initViz();
+</script>
+</body>
+</html>
