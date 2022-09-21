@@ -13,24 +13,22 @@ timeToRefresh = 30; //refresh evry 30 seconds..
 		var containerDiv = document.getElementById("vizContainer"),
 		url = "https://your.server.address/#/views/TableauDemoLivedata/Home";  //URL of the Tableau dashboard
 		
-	    var options = {
+		var options = {
 				height: "90%",
 				width:  "95%",
-                hideTabs: true,
+				hideTabs: true,
 				hideToolbar: true,
-                onFirstInteractive: function () {
-                    console.log("Finished loading.");
-                    setInterval(refreshViz, 1000); //run the function [refreshViz] every second
-                    }
-                };
+				onFirstInteractive: function () {
+		    			console.log("Finished loading.");
+		    			setInterval(refreshViz, 1000); //run the function [refreshViz] every second
+		    			}
+			}; //var options ends
 			
-        viz = new tableau.Viz(containerDiv, url, options); // the dashboard will be displayed here
-		
-		}// function ends
+        	viz = new tableau.Viz(containerDiv, url, options); // the dashboard will be displayed here
+		} // function [initViz] ends
 	
 	function refreshViz(){
 		timeToRefresh--; //reduce counter
-		
 		document.getElementById("timeToRefresh").innerHTML = "refreshing in <b>" + timeToRefresh + "</b> seconds..";
 		
 		if (timeToRefresh == 0) { //counter becomes zero, it's time to refresh
@@ -39,7 +37,7 @@ timeToRefresh = 30; //refresh evry 30 seconds..
 			timeToRefresh = 30; //set refesh counter back to 30 seconds
 			} //if ends
             
-	    } //function ends
+	    } //function [refreshViz] ends
 </script>
 <center>
 <div id="vizContainer"></div>
